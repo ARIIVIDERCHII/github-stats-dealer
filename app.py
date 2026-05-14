@@ -11,7 +11,7 @@ app = Flask(__name__)
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 GITHUB_USERNAME = os.getenv('GITHUB_USERNAME')
 
-# Наш крутой кэш, чтобы GitHub не заблокировал за частые запросы
+
 CACHE = {"data": None, "timestamp": 0}
 CACHE_TTL = 14400 
 
@@ -20,7 +20,7 @@ def get_github_data():
     if CACHE["data"] and (current_time - CACHE["timestamp"] < CACHE_TTL):
         return CACHE["data"]
 
-    # Запрашиваем 100 САМЫХ СВЕЖИХ репозиториев (orderBy: PUSHED_AT)
+
     query = """
     {
       user(login: "%s") {
@@ -79,7 +79,7 @@ def get_github_data():
 def github_stats_svg():
     top_langs, total_repos, total_commits, total_stars = get_github_data()
     
-    # ВОТ ОНО: Возвращаем правильные имена переменных, которые ждет твой SVG!
+    
     template_data = {
         "lang_1_name": top_langs[0][0], "lang_1_percent": top_langs[0][1],
         "lang_2_name": top_langs[1][0], "lang_2_percent": top_langs[1][1],
