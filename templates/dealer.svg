@@ -1,0 +1,236 @@
+<svg width="800" height="700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Золотой градиент -->
+    <linearGradient id="gold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#AA771C" />
+      <stop offset="30%" stop-color="#D4AF37" />
+      <stop offset="50%" stop-color="#FBF5B7" />
+      <stop offset="70%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#8A5A19" />
+    </linearGradient>
+
+    <linearGradient id="darkCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a2c30" />
+      <stop offset="100%" stop-color="#111214" />
+    </linearGradient>
+
+    <!-- Космический фон -->
+    <radialGradient id="spaceBg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#241638" />
+      <stop offset="60%" stop-color="#110a1c" />
+      <stop offset="100%" stop-color="#07050a" />
+    </radialGradient>
+
+    <pattern id="luxuryBack" width="24" height="24" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" fill="#111214" />
+      <path d="M12 0 L24 12 L12 24 L0 12 Z" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.7"/>
+      <path d="M0 0 L24 24 M24 0 L0 24" stroke="url(#gold)" stroke-width="0.3" opacity="0.3"/>
+      <circle cx="12" cy="12" r="1.5" fill="url(#gold)" opacity="0.9"/>
+    </pattern>
+
+    <g id="star">
+      <path d="M0 -20 Q0 0 20 0 Q0 0 0 20 Q0 0 -20 0 Q0 0 0 -20 Z" fill="url(#gold)" />
+      <circle cx="0" cy="0" r="2" fill="#fff" opacity="0.8"/>
+    </g>
+
+    <!-- Центральные ромбы -->
+    <path id="outerRhombus" d="M 400 40 L 750 350 L 400 660 L 50 350 Z" />
+    <path id="innerRhombus" d="M 400 120 L 620 350 L 400 580 L 180 350 Z" />
+    
+    <!-- Шаблоны для боковых ромбов -->
+    <polygon id="sideRhombus" points="0,-70 20,0 0,70 -20,0" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.25"/>
+    <polygon id="smallRhombus" points="0,-35 10,0 0,35 -10,0" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.4"/>
+    <polygon id="cornerCrystal" points="0,-6 6,0 0,6 -6,0" fill="url(#gold)" opacity="0.8"/>
+  </defs>
+
+  <style>
+    .twinkle-1 { animation: twinkle 3s infinite alternate ease-in-out; }
+    .twinkle-2 { animation: twinkle 4s infinite alternate ease-in-out 1s; }
+    .twinkle-3 { animation: twinkle 5s infinite alternate ease-in-out 2s; }
+    @keyframes twinkle { 0% { opacity: 0.1; transform: scale(0.8); } 100% { opacity: 0.9; transform: scale(1.1); } }
+
+    .card-group { opacity: 0; transform-origin: center; transform-box: fill-box; }
+    
+    .card-1 { animation: dealTopLeft 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.4s; }
+    .card-2 { animation: dealTopCenter 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.8s; }
+    .card-3 { animation: dealTopRight 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.2s; }
+    .card-4 { animation: dealBotLeft 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1.6s; }
+    .card-5 { animation: dealBotCenter 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 2.0s; }
+    .card-6 { animation: dealBotRight 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 2.4s; }
+
+    @keyframes dealTopLeft { 0% { opacity: 0; transform: translate(330px, -200px) scale(0.5); } 25%, 65% { opacity: 1; transform: translate(120px, 80px) scale(1); } 75% { transform: translate(120px, 80px) scaleX(0); } 85%, 100% { opacity: 1; transform: translate(120px, 80px) scaleX(1); } }
+    @keyframes dealTopCenter { 0% { opacity: 0; transform: translate(330px, -200px) scale(0.5); } 25%, 65% { opacity: 1; transform: translate(330px, 80px) scale(1); } 75% { transform: translate(330px, 80px) scaleX(0); } 85%, 100% { opacity: 1; transform: translate(330px, 80px) scaleX(1); } }
+    @keyframes dealTopRight { 0% { opacity: 0; transform: translate(330px, -200px) scale(0.5); } 25%, 65% { opacity: 1; transform: translate(540px, 80px) scale(1); } 75% { transform: translate(540px, 80px) scaleX(0); } 85%, 100% { opacity: 1; transform: translate(540px, 80px) scaleX(1); } }
+
+    @keyframes dealBotLeft { 0% { opacity: 0; transform: translate(330px, -200px) scale(0.5); } 25%, 65% { opacity: 1; transform: translate(120px, 340px) scale(1); } 75% { transform: translate(120px, 340px) scaleX(0); } 85%, 100% { opacity: 1; transform: translate(120px, 340px) scaleX(1); } }
+    @keyframes dealBotCenter { 0% { opacity: 0; transform: translate(330px, -200px) scale(0.5); } 25%, 65% { opacity: 1; transform: translate(330px, 340px) scale(1); } 75% { transform: translate(330px, 340px) scaleX(0); } 85%, 100% { opacity: 1; transform: translate(330px, 340px) scaleX(1); } }
+    @keyframes dealBotRight { 0% { opacity: 0; transform: translate(330px, -200px) scale(0.5); } 25%, 65% { opacity: 1; transform: translate(540px, 340px) scale(1); } 75% { transform: translate(540px, 340px) scaleX(0); } 85%, 100% { opacity: 1; transform: translate(540px, 340px) scaleX(1); } }
+
+    .card-front { opacity: 0; } .card-back-content { opacity: 1; }
+    .front-1 { animation: showF 2s forwards 0.4s; } .back-1 { animation: hideB 2s forwards 0.4s; }
+    .front-2 { animation: showF 2s forwards 0.8s; } .back-2 { animation: hideB 2s forwards 0.8s; }
+    .front-3 { animation: showF 2s forwards 1.2s; } .back-3 { animation: hideB 2s forwards 1.2s; }
+    .front-4 { animation: showF 2s forwards 1.6s; } .back-4 { animation: hideB 2s forwards 1.6s; }
+    .front-5 { animation: showF 2s forwards 2.0s; } .back-5 { animation: hideB 2s forwards 2.0s; }
+    .front-6 { animation: showF 2s forwards 2.4s; } .back-6 { animation: hideB 2s forwards 2.4s; }
+
+    @keyframes showF { 0%, 74% { opacity: 0; } 75%, 100% { opacity: 1; } }
+    @keyframes hideB { 0%, 74% { opacity: 1; } 75%, 100% { opacity: 0; } }
+    
+    .card-text { font-family: 'Georgia', 'Times New Roman', serif; font-size: 20px; font-weight: bold; fill: url(#gold); letter-spacing: 1px; }
+    .card-val { font-family: 'Georgia', 'Times New Roman', serif; font-size: 26px; fill: url(#gold); opacity: 0.9; }
+    .corner-text { font-family: 'Georgia', 'Times New Roman', serif; font-size: 14px; font-weight: bold; fill: url(#gold); }
+    .suit-motion { font-family: Arial, sans-serif; font-size: 26px; text-anchor: middle; dominant-baseline: central; fill: url(#gold); opacity: 0.9; filter: drop-shadow(0 0 5px rgba(251, 245, 183, 0.4)); }
+  </style>
+
+  <!-- Задний фон -->
+  <rect width="100%" height="100%" fill="url(#spaceBg)" />
+
+  <!-- === ЗОЛОТЫЕ РАМКИ === -->
+  <rect x="20" y="20" width="760" height="660" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.3" rx="4" />
+  <rect x="28" y="28" width="744" height="644" fill="none" stroke="url(#gold)" stroke-width="0.5" opacity="0.2" rx="2" />
+  
+  <!-- Угловые кристаллы на рамке -->
+  <use href="#cornerCrystal" x="20" y="20"/>
+  <use href="#cornerCrystal" x="780" y="20"/>
+  <use href="#cornerCrystal" x="20" y="680"/>
+  <use href="#cornerCrystal" x="780" y="680"/>
+
+  <!-- === БОКОВЫЕ ОРНАМЕНТЫ (Левая и правая оси) === -->
+  <!-- Вертикальные линии-колонны -->
+  <line x1="55" y1="20" x2="55" y2="680" stroke="url(#gold)" stroke-width="0.5" opacity="0.15"/>
+  <line x1="745" y1="20" x2="745" y2="680" stroke="url(#gold)" stroke-width="0.5" opacity="0.15"/>
+
+  <!-- Левые ромбы -->
+  <use href="#sideRhombus" x="55" y="350"/>
+  <use href="#smallRhombus" x="55" y="245"/>
+  <use href="#smallRhombus" x="55" y="455"/>
+  <use href="#smallRhombus" x="55" y="140"/>
+  <use href="#smallRhombus" x="55" y="560"/>
+
+  <!-- Правые ромбы -->
+  <use href="#sideRhombus" x="745" y="350"/>
+  <use href="#smallRhombus" x="745" y="245"/>
+  <use href="#smallRhombus" x="745" y="455"/>
+  <use href="#smallRhombus" x="745" y="140"/>
+  <use href="#smallRhombus" x="745" y="560"/>
+
+  <!-- === ЦЕНТРАЛЬНАЯ ГЕОМЕТРИЯ === -->
+  <path d="M 400 20 L 400 680" stroke="url(#gold)" stroke-width="1" opacity="0.1" stroke-dasharray="8 8"/>
+  <path d="M 20 350 L 780 350" stroke="url(#gold)" stroke-width="1" opacity="0.1" stroke-dasharray="8 8"/>
+  
+  <use href="#outerRhombus" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.3" />
+  <use href="#innerRhombus" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.2" />
+
+  <!-- Масти на центральных ромбах -->
+  <text class="suit-motion">♠<animateMotion dur="20s" repeatCount="indefinite" begin="0s"><mpath href="#outerRhombus"/></animateMotion></text>
+  <text class="suit-motion">♥<animateMotion dur="20s" repeatCount="indefinite" begin="-10s"><mpath href="#outerRhombus"/></animateMotion></text>
+  <text class="suit-motion" style="font-size: 20px; opacity: 0.7;">♦<animateMotion dur="15s" repeatCount="indefinite" begin="0s"><mpath href="#innerRhombus"/></animateMotion></text>
+  <text class="suit-motion" style="font-size: 20px; opacity: 0.7;">♣<animateMotion dur="15s" repeatCount="indefinite" begin="-7.5s"><mpath href="#innerRhombus"/></animateMotion></text>
+
+  <!-- Звезды -->
+  <use href="#star" x="400" y="40" class="twinkle-1" style="transform-origin: 400px 40px;" />
+  <use href="#star" x="150" y="150" class="twinkle-2" style="transform-origin: 150px 150px;" />
+  <use href="#star" x="650" y="150" class="twinkle-3" style="transform-origin: 650px 150px;" />
+  <use href="#star" x="400" y="660" class="twinkle-2" style="transform-origin: 400px 660px;" />
+  <g transform="translate(250, 80) scale(0.5)"><use href="#star" class="twinkle-3" style="transform-origin: 0 0;"/></g>
+  <g transform="translate(550, 500) scale(0.6)"><use href="#star" class="twinkle-1" style="transform-origin: 0 0;"/></g>
+
+  <!-- ==================== ВЕРХНИЙ РЯД ==================== -->
+  <g class="card-group card-1">
+    <g class="card-back-content back-1">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="124" height="184" x="8" y="8" rx="4" fill="url(#luxuryBack)" stroke="url(#gold)" stroke-width="1.5" />
+    </g>
+    <g class="card-front front-1">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="128" height="188" x="6" y="6" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.8" />
+      <text class="corner-text" x="18" y="26">I</text>
+      <text class="card-text" x="70" y="100" text-anchor="middle">{{ lang_1_name }}</text>
+      <path d="M30 110 L110 110" stroke="url(#gold)" stroke-width="0.5" opacity="0.5" />
+      <text class="card-val" x="70" y="140" text-anchor="middle">{{ lang_1_percent }}%</text>
+      <polygon points="0,0 140,0 0,130" fill="rgba(255,255,255,0.03)" style="pointer-events: none;"/>
+    </g>
+  </g>
+
+  <g class="card-group card-2">
+    <g class="card-back-content back-2">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="124" height="184" x="8" y="8" rx="4" fill="url(#luxuryBack)" stroke="url(#gold)" stroke-width="1.5" />
+    </g>
+    <g class="card-front front-2">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="128" height="188" x="6" y="6" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.8" />
+      <text class="corner-text" x="18" y="26">II</text>
+      <text class="card-text" x="70" y="100" text-anchor="middle">{{ lang_2_name }}</text>
+      <path d="M30 110 L110 110" stroke="url(#gold)" stroke-width="0.5" opacity="0.5" />
+      <text class="card-val" x="70" y="140" text-anchor="middle">{{ lang_2_percent }}%</text>
+      <polygon points="0,0 140,0 0,130" fill="rgba(255,255,255,0.03)" style="pointer-events: none;"/>
+    </g>
+  </g>
+
+  <g class="card-group card-3">
+    <g class="card-back-content back-3">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="124" height="184" x="8" y="8" rx="4" fill="url(#luxuryBack)" stroke="url(#gold)" stroke-width="1.5" />
+    </g>
+    <g class="card-front front-3">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="128" height="188" x="6" y="6" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.8" />
+      <text class="corner-text" x="18" y="26">III</text>
+      <text class="card-text" x="70" y="100" text-anchor="middle">{{ lang_3_name }}</text>
+      <path d="M30 110 L110 110" stroke="url(#gold)" stroke-width="0.5" opacity="0.5" />
+      <text class="card-val" x="70" y="140" text-anchor="middle">{{ lang_3_percent }}%</text>
+      <polygon points="0,0 140,0 0,130" fill="rgba(255,255,255,0.03)" style="pointer-events: none;"/>
+    </g>
+  </g>
+
+  <!-- ==================== НИЖНИЙ РЯД ==================== -->
+  <g class="card-group card-4">
+    <g class="card-back-content back-4">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="124" height="184" x="8" y="8" rx="4" fill="url(#luxuryBack)" stroke="url(#gold)" stroke-width="1.5" />
+    </g>
+    <g class="card-front front-4">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="128" height="188" x="6" y="6" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.8" />
+      <text class="corner-text" x="18" y="26">IV</text>
+      <text class="card-text" x="70" y="100" text-anchor="middle">{{ stat_1_title }}</text>
+      <path d="M30 110 L110 110" stroke="url(#gold)" stroke-width="0.5" opacity="0.5" />
+      <text class="card-val" x="70" y="140" text-anchor="middle">{{ stat_1_value }}</text>
+      <polygon points="0,0 140,0 0,130" fill="rgba(255,255,255,0.03)" style="pointer-events: none;"/>
+    </g>
+  </g>
+
+  <g class="card-group card-5">
+    <g class="card-back-content back-5">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="124" height="184" x="8" y="8" rx="4" fill="url(#luxuryBack)" stroke="url(#gold)" stroke-width="1.5" />
+    </g>
+    <g class="card-front front-5">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="128" height="188" x="6" y="6" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.8" />
+      <text class="corner-text" x="18" y="26">V</text>
+      <text class="card-text" x="70" y="100" text-anchor="middle">{{ stat_2_title }}</text>
+      <path d="M30 110 L110 110" stroke="url(#gold)" stroke-width="0.5" opacity="0.5" />
+      <text class="card-val" x="70" y="140" text-anchor="middle">{{ stat_2_value }}</text>
+      <polygon points="0,0 140,0 0,130" fill="rgba(255,255,255,0.03)" style="pointer-events: none;"/>
+    </g>
+  </g>
+
+  <g class="card-group card-6">
+    <g class="card-back-content back-6">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="124" height="184" x="8" y="8" rx="4" fill="url(#luxuryBack)" stroke="url(#gold)" stroke-width="1.5" />
+    </g>
+    <g class="card-front front-6">
+      <rect width="140" height="200" rx="8" fill="url(#darkCard)" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
+      <rect width="128" height="188" x="6" y="6" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.8" />
+      <text class="corner-text" x="18" y="26">VI</text>
+      <text class="card-text" x="70" y="100" text-anchor="middle">{{ stat_3_title }}</text>
+      <path d="M30 110 L110 110" stroke="url(#gold)" stroke-width="0.5" opacity="0.5" />
+      <text class="card-val" x="70" y="140" text-anchor="middle">{{ stat_3_value }}</text>
+      <polygon points="0,0 140,0 0,130" fill="rgba(255,255,255,0.03)" style="pointer-events: none;"/>
+    </g>
+  </g>
+</svg>
