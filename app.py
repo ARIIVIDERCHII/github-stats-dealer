@@ -79,6 +79,7 @@ def get_github_data():
 def github_stats_svg():
     top_langs, total_repos, total_commits, total_stars = get_github_data()
     
+    
     template_data = {
         "lang_1_name": top_langs[0][0], "lang_1_percent": top_langs[0][1],
         "lang_2_name": top_langs[1][0], "lang_2_percent": top_langs[1][1],
@@ -92,11 +93,7 @@ def github_stats_svg():
     
     response = make_response(svg_content)
     response.content_type = 'image/svg+xml'
-    
-    # СБРОС КЭША: Эти заголовки заставят GitHub каждый раз запрашивать новую анимацию
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = '0'
+    response.headers['Cache-Control'] = 'public, max-age=14400'
     
     return response
 
