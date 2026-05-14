@@ -11,7 +11,6 @@ app = Flask(__name__)
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 GITHUB_USERNAME = os.getenv('GITHUB_USERNAME')
 
-
 CACHE = {"data": None, "timestamp": 0}
 CACHE_TTL = 14400 
 
@@ -19,7 +18,6 @@ def get_github_data():
     current_time = time.time()
     if CACHE["data"] and (current_time - CACHE["timestamp"] < CACHE_TTL):
         return CACHE["data"]
-
 
     query = """
     {
@@ -39,49 +37,61 @@ def get_github_data():
     """ % GITHUB_USERNAME
 
     headers = {'Authorization': f'bearer {GITHUB_TOKEN}'}
-    response = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
     
-    if response.status_code != 200:
-        return [], 0, 0, 0
-
-    data = response.json().get('data', {}).get('user', {})
-    repos_data = data.get('repositories', {})
-    total_repos = repos_data.get('totalCount', 0)
+    # Дефолтные значения на случай ошибки API
+    default_langs = [("N/A", 0), ("N/A", 0), ("N/A", 0)]
     
-    language_bytes = {}
-    total_bytes = 0
-    total_stars = 0
-    
-    for repo in repos_data.get('nodes', []):
-        total_stars += repo.get('stargazerCount', 0)
-        for edge in repo.get('languages', {}).get('edges', []):
-            lang_name = edge['node']['name']
-            size = edge['size']
-            language_bytes[lang_name] = language_bytes.get(lang_name, 0) + size
-            total_bytes += size
+    try:
+        response = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
+        
+        if response.status_code != 200:
+            print(f"GitHub API Error: {response.status_code} - {response.text}")
+            return default_langs, 0, 0, 0
 
-    top_langs = []
-    if total_bytes > 0:
-        language_percentages = {lang: round((size / total_bytes) * 100, 1) for lang, size in language_bytes.items()}
-        top_langs = sorted(language_percentages.items(), key=lambda x: x[1], reverse=True)[:3]
+        data = response.json().get('data', {}).get('user', {})
+        if not data:
+            return default_langs, 0, 0, 0
 
-    while len(top_langs) < 3:
-        top_langs.append(("N/A", 0))
+        repos_data = data.get('repositories', {})
+        total_repos = repos_data.get('totalCount', 0)
+        
+        language_bytes = {}
+        total_bytes = 0
+        total_stars = 0
+        
+        for repo in repos_data.get('nodes', []):
+            total_stars += repo.get('stargazerCount', 0)
+            for edge in repo.get('languages', {}).get('edges', []):
+                lang_name = edge['node']['name']
+                size = edge['size']
+                language_bytes[lang_name] = language_bytes.get(lang_name, 0) + size
+                total_bytes += size
 
-    total_commits = data.get('contributionsCollection', {}).get('totalCommitContributions', 0)
+        top_langs = []
+        if total_bytes > 0:
+            language_percentages = {lang: round((size / total_bytes) * 100, 1) for lang, size in language_bytes.items()}
+            top_langs = sorted(language_percentages.items(), key=lambda x: x[1], reverse=True)[:3]
 
-    CACHE["data"] = (top_langs, total_repos, total_commits, total_stars)
-    CACHE["timestamp"] = current_time
+        # Добиваем список заглушками, если языков меньше 3
+        while len(top_langs) < 3:
+            top_langs.append(("N/A", 0))
 
-    return CACHE["data"]
+        total_commits = data.get('contributionsCollection', {}).get('totalCommitContributions', 0)
+
+        CACHE["data"] = (top_langs, total_repos, total_commits, total_stars)
+        CACHE["timestamp"] = current_time
+
+        return CACHE["data"]
+        
+    except Exception as e:
+        print(f"Request failed: {e}")
+        return default_langs, 0, 0, 0
 
 @app.route('/api/stats')
 def github_stats_svg():
-    # ... ves' kod dlya get_github_data() ...
     top_langs, total_repos, total_commits, total_stars = get_github_data()
     
     template_data = {
-        # ... ves' kod dlya template_data ...
         "lang_1_name": top_langs[0][0], "lang_1_percent": top_langs[0][1],
         "lang_2_name": top_langs[1][0], "lang_2_percent": top_langs[1][1],
         "lang_3_name": top_langs[2][0], "lang_3_percent": top_langs[2][1],
@@ -95,7 +105,6 @@ def github_stats_svg():
     response = make_response(svg_content)
     response.content_type = 'image/svg+xml'
     
-    # ВОТ ОНО: Правильные headers для отключения кеша в production (и в GitHub)
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '0'
