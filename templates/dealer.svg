@@ -1,4 +1,4 @@
-<svg width="800" height="700" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 800 700" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <!-- Золотой градиент -->
     <linearGradient id="gold" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -33,11 +33,9 @@
       <circle cx="0" cy="0" r="2" fill="#fff" opacity="0.8"/>
     </g>
 
-    <!-- Центральные ромбы -->
     <path id="outerRhombus" d="M 400 40 L 750 350 L 400 660 L 50 350 Z" />
     <path id="innerRhombus" d="M 400 120 L 620 350 L 400 580 L 180 350 Z" />
     
-    <!-- Шаблоны для боковых ромбов -->
     <polygon id="sideRhombus" points="0,-70 20,0 0,70 -20,0" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.25"/>
     <polygon id="smallRhombus" points="0,-35 10,0 0,35 -10,0" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.4"/>
     <polygon id="cornerCrystal" points="0,-6 6,0 0,6 -6,0" fill="url(#gold)" opacity="0.8"/>
@@ -77,58 +75,47 @@
     @keyframes showF { 0%, 74% { opacity: 0; } 75%, 100% { opacity: 1; } }
     @keyframes hideB { 0%, 74% { opacity: 1; } 75%, 100% { opacity: 0; } }
     
-    .card-text { font-family: 'Georgia', 'Times New Roman', serif; font-size: 20px; font-weight: bold; fill: url(#gold); letter-spacing: 1px; }
+    .card-text { font-family: 'Georgia', 'Times New Roman', serif; font-size: 22px; font-weight: bold; fill: url(#gold); letter-spacing: 1px; }
     .card-val { font-family: 'Georgia', 'Times New Roman', serif; font-size: 26px; fill: url(#gold); opacity: 0.9; }
     .corner-text { font-family: 'Georgia', 'Times New Roman', serif; font-size: 14px; font-weight: bold; fill: url(#gold); }
     .suit-motion { font-family: Arial, sans-serif; font-size: 26px; text-anchor: middle; dominant-baseline: central; fill: url(#gold); opacity: 0.9; filter: drop-shadow(0 0 5px rgba(251, 245, 183, 0.4)); }
   </style>
 
-  <!-- Задний фон -->
   <rect width="100%" height="100%" fill="url(#spaceBg)" />
-
-  <!-- === ЗОЛОТЫЕ РАМКИ === -->
   <rect x="20" y="20" width="760" height="660" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.3" rx="4" />
   <rect x="28" y="28" width="744" height="644" fill="none" stroke="url(#gold)" stroke-width="0.5" opacity="0.2" rx="2" />
   
-  <!-- Угловые кристаллы на рамке -->
   <use href="#cornerCrystal" x="20" y="20"/>
   <use href="#cornerCrystal" x="780" y="20"/>
   <use href="#cornerCrystal" x="20" y="680"/>
   <use href="#cornerCrystal" x="780" y="680"/>
 
-  <!-- === БОКОВЫЕ ОРНАМЕНТЫ (Левая и правая оси) === -->
-  <!-- Вертикальные линии-колонны -->
   <line x1="55" y1="20" x2="55" y2="680" stroke="url(#gold)" stroke-width="0.5" opacity="0.15"/>
   <line x1="745" y1="20" x2="745" y2="680" stroke="url(#gold)" stroke-width="0.5" opacity="0.15"/>
-
-  <!-- Левые ромбы -->
+  
   <use href="#sideRhombus" x="55" y="350"/>
   <use href="#smallRhombus" x="55" y="245"/>
   <use href="#smallRhombus" x="55" y="455"/>
   <use href="#smallRhombus" x="55" y="140"/>
   <use href="#smallRhombus" x="55" y="560"/>
 
-  <!-- Правые ромбы -->
   <use href="#sideRhombus" x="745" y="350"/>
   <use href="#smallRhombus" x="745" y="245"/>
   <use href="#smallRhombus" x="745" y="455"/>
   <use href="#smallRhombus" x="745" y="140"/>
   <use href="#smallRhombus" x="745" y="560"/>
 
-  <!-- === ЦЕНТРАЛЬНАЯ ГЕОМЕТРИЯ === -->
   <path d="M 400 20 L 400 680" stroke="url(#gold)" stroke-width="1" opacity="0.1" stroke-dasharray="8 8"/>
   <path d="M 20 350 L 780 350" stroke="url(#gold)" stroke-width="1" opacity="0.1" stroke-dasharray="8 8"/>
   
   <use href="#outerRhombus" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.3" />
   <use href="#innerRhombus" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.2" />
 
-  <!-- Масти на центральных ромбах -->
   <text class="suit-motion">♠<animateMotion dur="20s" repeatCount="indefinite" begin="0s"><mpath href="#outerRhombus"/></animateMotion></text>
   <text class="suit-motion">♥<animateMotion dur="20s" repeatCount="indefinite" begin="-10s"><mpath href="#outerRhombus"/></animateMotion></text>
   <text class="suit-motion" style="font-size: 20px; opacity: 0.7;">♦<animateMotion dur="15s" repeatCount="indefinite" begin="0s"><mpath href="#innerRhombus"/></animateMotion></text>
   <text class="suit-motion" style="font-size: 20px; opacity: 0.7;">♣<animateMotion dur="15s" repeatCount="indefinite" begin="-7.5s"><mpath href="#innerRhombus"/></animateMotion></text>
 
-  <!-- Звезды -->
   <use href="#star" x="400" y="40" class="twinkle-1" style="transform-origin: 400px 40px;" />
   <use href="#star" x="150" y="150" class="twinkle-2" style="transform-origin: 150px 150px;" />
   <use href="#star" x="650" y="150" class="twinkle-3" style="transform-origin: 650px 150px;" />
@@ -136,7 +123,7 @@
   <g transform="translate(250, 80) scale(0.5)"><use href="#star" class="twinkle-3" style="transform-origin: 0 0;"/></g>
   <g transform="translate(550, 500) scale(0.6)"><use href="#star" class="twinkle-1" style="transform-origin: 0 0;"/></g>
 
-  <!-- ==================== ВЕРХНИЙ РЯД ==================== -->
+  <!-- ==================== ВЕРХНИЙ РЯД (ЯЗЫКИ) ==================== -->
   <g class="card-group card-1">
     <g class="card-back-content back-1">
       <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
@@ -146,6 +133,7 @@
       <rect width="140" height="200" rx="8" fill="url(#darkCard)" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />
       <rect width="128" height="188" x="6" y="6" rx="4" fill="none" stroke="url(#gold)" stroke-width="1.2" opacity="0.8" />
       <text class="corner-text" x="18" y="26">I</text>
+      <!-- УБРАЛИ РАСТЯГИВАНИЕ -->
       <text class="card-text" x="70" y="100" text-anchor="middle">{{ lang_1_name }}</text>
       <path d="M30 110 L110 110" stroke="url(#gold)" stroke-width="0.5" opacity="0.5" />
       <text class="card-val" x="70" y="140" text-anchor="middle">{{ lang_1_percent }}%</text>
@@ -185,7 +173,7 @@
     </g>
   </g>
 
-  <!-- ==================== НИЖНИЙ РЯД ==================== -->
+  <!-- ==================== НИЖНИЙ РЯД (СТАТИСТИКА) ==================== -->
   <g class="card-group card-4">
     <g class="card-back-content back-4">
       <rect width="140" height="200" rx="8" fill="url(#darkCard)" stroke="#1a1a1a" style="filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));" />

@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 from flask import Flask, make_response, render_template
 from dotenv import load_dotenv
@@ -10,25 +11,29 @@ app = Flask(__name__)
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 GITHUB_USERNAME = os.getenv('GITHUB_USERNAME')
 
+# Наш крутой кэш, чтобы GitHub не заблокировал за частые запросы
+CACHE = {"data": None, "timestamp": 0}
+CACHE_TTL = 14400 
+
 def get_github_data():
+    current_time = time.time()
+    if CACHE["data"] and (current_time - CACHE["timestamp"] < CACHE_TTL):
+        return CACHE["data"]
+
+    # Запрашиваем 100 САМЫХ СВЕЖИХ репозиториев (orderBy: PUSHED_AT)
     query = """
     {
       user(login: "%s") {
-        repositories(ownerAffiliations: OWNER, isFork: false, first: 100) {
+        repositories(ownerAffiliations: OWNER, isFork: false, first: 100, orderBy: {field: PUSHED_AT, direction: DESC}) {
           totalCount
           nodes {
             stargazerCount
             languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
-              edges {
-                size
-                node { name }
-              }
+              edges { size, node { name } }
             }
           }
         }
-        contributionsCollection {
-          totalCommitContributions
-        }
+        contributionsCollection { totalCommitContributions }
       }
     }
     """ % GITHUB_USERNAME
@@ -40,19 +45,15 @@ def get_github_data():
         return [], 0, 0, 0
 
     data = response.json().get('data', {}).get('user', {})
-    
-    # 1. Считаем языки и Звезды
     repos_data = data.get('repositories', {})
     total_repos = repos_data.get('totalCount', 0)
     
     language_bytes = {}
     total_bytes = 0
-    total_stars = 0 # Новая переменная для звезд
+    total_stars = 0
     
     for repo in repos_data.get('nodes', []):
-        # Плюсуем звезды каждого репозитория
         total_stars += repo.get('stargazerCount', 0)
-        
         for edge in repo.get('languages', {}).get('edges', []):
             lang_name = edge['node']['name']
             size = edge['size']
@@ -67,24 +68,25 @@ def get_github_data():
     while len(top_langs) < 3:
         top_langs.append(("N/A", 0))
 
-    # 2. Получаем активность (Коммиты)
-    contribs = data.get('contributionsCollection', {})
-    total_commits = contribs.get('totalCommitContributions', 0)
+    total_commits = data.get('contributionsCollection', {}).get('totalCommitContributions', 0)
 
-    return top_langs, total_repos, total_commits, total_stars
+    CACHE["data"] = (top_langs, total_repos, total_commits, total_stars)
+    CACHE["timestamp"] = current_time
+
+    return CACHE["data"]
 
 @app.route('/api/stats')
 def github_stats_svg():
     top_langs, total_repos, total_commits, total_stars = get_github_data()
     
-    # Передаем обновленные данные в шаблон
+    # ВОТ ОНО: Возвращаем правильные имена переменных, которые ждет твой SVG!
     template_data = {
         "lang_1_name": top_langs[0][0], "lang_1_percent": top_langs[0][1],
         "lang_2_name": top_langs[1][0], "lang_2_percent": top_langs[1][1],
         "lang_3_name": top_langs[2][0], "lang_3_percent": top_langs[2][1],
         "stat_1_title": "Repos", "stat_1_value": total_repos,
         "stat_2_title": "Commits", "stat_2_value": total_commits,
-        "stat_3_title": "Stars", "stat_3_value": total_stars, # Здесь теперь Stars
+        "stat_3_title": "Stars", "stat_3_value": total_stars,
     }
 
     svg_content = render_template('dealer.svg', **template_data)
